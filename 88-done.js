@@ -20,7 +20,8 @@ var merge = function (nums1, m, nums2, n) {
     i--;
   }
 };
-
-merge([1, 2, 5, 0, 0], 3, [3, 4], 2);
+const nums1 = [1, 2, 5, 0, 0];
+merge(nums1, 3, [3, 4], 2);
+console.log(nums1);
 
 // chỉ đơn giản là loop ngược từ dưới cuối array lên
