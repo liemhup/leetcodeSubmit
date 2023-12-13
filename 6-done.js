@@ -6,10 +6,8 @@ const zigzag = (str, numRows) => {
     if (mod < numRows) {
       rows[mod] += str[i];
     } else rows[2 * numRows - 2 - mod] += str[i];
-    console.log('i: ', i, 'mod: ', mod, 'rows:', rows);
   }
-
   return rows.join('');
 };
 
-console.log(zigzag('abcdefgh', 4));
+console.log(zigzag('liemhup', 4));

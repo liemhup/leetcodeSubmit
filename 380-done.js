@@ -10,34 +10,32 @@
 // // You must implement the functions of the class such that each
 // function works in average O(1) time complexity.
 
-var RandomizedSet = function () {
-  this.data = [];
-};
+class RandomizedSet {
+  constructor() {
+    this.data = [];
+    this.map = new Map();
+  }
 
-/**
- * @param {number} val
- * @return {boolean}
- */
-RandomizedSet.prototype.insert = function (val) {
-  if (this.includes(val)) return false;
-  this.push(val);
-  return true;
-};
+  insert(val) {
+    if (this.map.has(val)) {
+      return false;
+    }
+    this.data.push(val);
+    this.map.set(val, this.data.length - 1);
+    return true;
+  }
 
-/**
- * @param {number} val
- * @return {boolean}
- */
-RandomizedSet.prototype.remove = function (val) {
-  if (!this.includes(val)) return false;
-  th.filter((num) => num != val);
-  return true;
-};
+  remove(val) {
+    if (!this.map.has(val)) return false;
+    const index = this.map.get(val);
+    this.data[index] = this.data[this.data.length - 1];
+    this.data.pop();
+    this.map.delete(val);
+    this.map.set(this.data[index], index);
+    return true;
+  }
 
-/**
- * @return {number}
- */
-RandomizedSet.prototype.getRandom = function () {
-  const randomIndex = Math.random() * (this.length - 1);
-  return this[randomIndex];
-};
+  getRandom() {
+    return this.data[Math.floor(Math.random() * this.data.length)];
+  }
+}
