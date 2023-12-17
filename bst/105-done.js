@@ -25,16 +25,29 @@ class TreeNode {
  * @return {TreeNode}
  */
 var buildTree = function (preorder, inorder) {
-  let root = new TreeNode(preorder[0]);
-  const inorderRootIndex = inorder.indexOf(preorder[0]);
-  console.log(inorderRootIndex);
-  return root;
+  const helper = (rootIndex, startIdx, endIdx) => {
+    let root = new TreeNode(preorder[rootIndex]);
+    if (startIdx == endIdx) return root;
+    const inorderRootIndex = inorder.indexOf(root.val);
+    if (inorderRootIndex > startIdx) {
+      root.left = helper(rootIndex + 1, startIdx, inorderRootIndex - 1);
+    }
+    if (inorderRootIndex < endIdx) {
+      root.right = helper(
+        rootIndex + inorderRootIndex - startIdx + 1,
+        inorderRootIndex + 1,
+        endIdx
+      );
+    }
+    return root;
+  };
+  return helper(0, 0, inorder.length - 1);
 };
 
-let preorder = [3, 9, 20, 15, 7];
-let inorder = [9, 3, 15, 20, 7];
+let preorder = [3, 1, 2, 4];
+let inorder = [1, 2, 3, 4];
 
 const root = buildTree(preorder, inorder);
-
+console.log(root);
 //                    3
 //                9
