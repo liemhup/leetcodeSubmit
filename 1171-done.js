@@ -53,6 +53,33 @@ var removeZeroSumSublists = function (head) {
   }
   return root;
 };
+//beat 90%
+const removeZeroSumSublists1 = (head) => {
+  let helper = (node) => {
+    let sum = 0;
+    let cur = node;
+    let map = new Map();
+    while (cur) {
+      sum += cur.val;
+      if (sum == 0) {
+        head = cur.next;
+      }
+      if (!map.has(sum)) {
+        map.set(sum, cur);
+      } else {
+        map.get(sum).next = cur.next;
+        return node;
+      }
+      cur = cur.next;
+    }
+    return null;
+  };
+  let isRemoved = helper(head);
+  while (isRemoved) {
+    isRemoved = helper(head);
+  }
+  return head;
+};
 
 class ListNode {
   constructor(val, next) {
@@ -60,19 +87,23 @@ class ListNode {
     this.next = next === undefined ? null : next;
   }
 }
-
+[1, 3, 2, -3, -2, 5, 5, -5, 1];
 let head = new ListNode(
-  5,
+  1,
   new ListNode(
-    4,
+    3,
     new ListNode(
-      -7,
+      2,
       new ListNode(
-        11,
-        new ListNode(-11, new ListNode(4, new ListNode(-2, new ListNode(-2))))
+        -3,
+        new ListNode(
+          -2,
+          new ListNode(5, new ListNode(5, new ListNode(-5, new ListNode(1))))
+        )
       )
     )
   )
 );
 
-removeZeroSumSublists(head);
+// removeZeroSumSublists(head);
+console.log(removeZeroSumSublists1(head));
